@@ -44,14 +44,16 @@ public class Runner {
 
         latch1.await();
 
+        CountDownLatch latch2 = new CountDownLatch(blueCount);
 
         for (int i = 0; i < blueCount; i++) {
-            BlueThread blueThread = new BlueThread();
+            BlueThread blueThread = new BlueThread(latch2);
             colorThreads.add(blueThread);
             blueThread.start();
         }
 
-        // TODO
+        latch2.await();
+
 
         for (int i = 0; i < whiteCount; i++) {
             WhiteThread whiteThread = new WhiteThread();
