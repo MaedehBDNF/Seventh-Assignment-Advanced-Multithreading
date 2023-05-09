@@ -2,6 +2,7 @@ package sbu.cs.PrioritySimulator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 public class Runner {
 
@@ -33,15 +34,16 @@ public class Runner {
     public void run(int blackCount, int blueCount, int whiteCount) throws InterruptedException {
         List<ColorThread> colorThreads = new ArrayList<>();
 
-        // TODO
+        CountDownLatch latch1 = new CountDownLatch(blackCount);
 
         for (int i = 0; i < blackCount; i++) {
-            BlackThread blackThread = new BlackThread();
+            BlackThread blackThread = new BlackThread(latch1);
             colorThreads.add(blackThread);
             blackThread.start();
         }
 
-        // TODO
+        latch1.await();
+
 
         for (int i = 0; i < blueCount; i++) {
             BlueThread blueThread = new BlueThread();
