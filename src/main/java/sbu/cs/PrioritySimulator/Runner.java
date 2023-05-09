@@ -54,14 +54,16 @@ public class Runner {
 
         latch2.await();
 
+        CountDownLatch latch3 = new CountDownLatch(whiteCount);
 
         for (int i = 0; i < whiteCount; i++) {
-            WhiteThread whiteThread = new WhiteThread();
+            WhiteThread whiteThread = new WhiteThread(latch3);
             colorThreads.add(whiteThread);
             whiteThread.start();
         }
 
-        // TODO
+       latch3.await();
+
     }
 
     synchronized public static void addToList(Message message) {
