@@ -60,8 +60,25 @@ public class PiCalculator {
 
     public String calculate(int floatingPoint)
     {
-        // TODO
-        return null;
+        pi = new BigDecimal(0); // for tests
+        ExecutorService threadPool = Executors.newFixedThreadPool(8);
+
+        final int iterations = 100000;
+        for (int i = 0; i <= iterations; i++){
+            TermCalculator tc = new TermCalculator(i, floatingPoint);
+            threadPool.execute(tc);
+        }
+
+        threadPool.shutdown();
+
+        try {
+            threadPool.awaitTermination(10, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        pi = pi.setScale(floatingPoint, RoundingMode.HALF_UP);
+        return pi.toPlainString();
     }
 
     public static void main(String[] args) {
