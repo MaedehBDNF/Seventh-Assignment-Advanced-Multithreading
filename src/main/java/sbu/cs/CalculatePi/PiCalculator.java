@@ -85,3 +85,97 @@ public class PiCalculator {
         // Use the main function to test the code yourself
     }
 }
+
+// Chudnovsky brothers method doesn't worked!!!
+
+//public class PiCalculator {
+//
+//    public static BigDecimal piInverse = new BigDecimal(0);
+//
+//    public static class TermCalculator implements Runnable {
+//        MathContext mc = new MathContext(1000, RoundingMode.HALF_UP);
+//        int n; // number of the term
+//
+//        public TermCalculator (int n) {
+//            this.n = n;
+//        }
+//
+//        public void run() {
+//            BigDecimal sign = new BigDecimal(1);
+//            if (n % 2 == 1) {
+//                sign = new BigDecimal(-1);
+//            }
+//
+//            BigDecimal term = new BigDecimal(1);
+//            term = term.multiply(sign, mc);
+//            term = term.multiply(numerator, mc);
+//            term = term.divide(denominator(n), mc);
+//            addTerm(term, mc);
+//        }
+//
+//
+//        private BigDecimal numerator(int n){
+//            BigDecimal num = new BigDecimal(12 * (13591409 + 545140134*n));
+//            num = num.multiply(factorial(6*n), mc);
+//            return num;
+//        }
+//
+//        private BigDecimal denominator (int n){
+//            BigDecimal den = new BigDecimal(640320);
+//            den = den.pow(6*n + 3, mc);
+//            den = den.sqrt(mc);
+//            den = den.multiply(factorial(n).pow(3), mc);
+//            den = den.multiply(factorial(3*n), mc);
+//            return den;
+//        }
+//
+//        private BigDecimal factorial(int n){
+//            BigDecimal temp = new BigDecimal(1);
+//            for (int i = 1; i <= n; i++) {
+//                temp = temp.multiply(new BigDecimal(i), mc);
+//            }
+//
+//            return temp;
+//        }
+//
+//    }
+//
+//    public static synchronized void addTerm(BigDecimal term, MathContext mc){
+//        piInverse = piInverse.add(term, mc);
+//    }
+//
+//    public String calculate(int floatingPoint)
+//    {
+//        piInverse = new BigDecimal(0); // for tests;
+//
+//        BigDecimal pi;
+//        ExecutorService threadPool = Executors.newFixedThreadPool(8);
+//
+//        final int iterations = 1000;
+//        for (int i = 1; i <= iterations; i++){
+//            TermCalculator tc = new TermCalculator(i);
+//            threadPool.execute(tc);
+//        }
+//
+//        threadPool.shutdown();
+//
+//        try {
+//            threadPool.awaitTermination(10, TimeUnit.SECONDS);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        BigDecimal one = new BigDecimal(1);
+//        pi = one.divide(piInverse, new MathContext(1000, RoundingMode.HALF_UP));
+//        pi = pi.setScale(floatingPoint, RoundingMode.HALF_UP);
+//        return pi.toPlainString();
+//    }
+//
+//    public static void main(String[] args) {
+//        PiCalculator piCalculator = new PiCalculator();
+//        System.out.println(piCalculator.calculate(100));
+//    }
+//}
+
+
+
